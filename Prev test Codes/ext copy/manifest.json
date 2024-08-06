@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name": "MeetMan",
+    "version": "1.0",
+    "description": "Collects captions from Google Meet",
+    "permissions": ["activeTab", "storage"],
+    "content_scripts": [
+      {
+        "matches": ["https://meet.google.com/*"],
+        "js": ["link_checker.js"]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": ["content.js"],
+        "matches": ["https://meet.google.com/*"]
+      }
+    ]
+  }
