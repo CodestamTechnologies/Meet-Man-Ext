@@ -160,6 +160,23 @@ function createUI() {
     extensionDiv.style.overflowY = 'auto';
     extensionDiv.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
 
+    extensionDiv.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        offsetX = e.clientX - extensionDiv.getBoundingClientRect().left;
+        offsetY = e.clientY - extensionDiv.getBoundingClientRect().top;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            extensionDiv.style.left = `${e.clientX - offsetX}px`;
+            extensionDiv.style.top = `${e.clientY - offsetY}px`;
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
     keyInput = document.createElement('input');
     keyInput.type = 'text';
     keyInput.placeholder = 'Enter Key';
@@ -409,16 +426,28 @@ function initialize() {
 
         // Wait for the button to become visible and then click it
         const waitForButtonAndClick = () => {
-            const button = document.querySelector('.material-icons-extended.VfPpkd-Bz112c-kBDsod');
-            if (button) {
-                button.click();
-                console.log("Captions on");
-            } else {
-                setTimeout(waitForButtonAndClick, 100); // Check every 100ms
-            }
+            // Select all elements with the tooltip role
+            const tooltips = document.querySelectorAll('div[role="tooltip"]');
+
+            // Iterate over each tooltip element to find the one with the correct text
+            tooltips.forEach((tooltip) => {
+                if (tooltip.textContent.includes("Turn on captions (c)")) {
+                    // Once the tooltip is found, look for its associated button
+                    const button = document.querySelector('.material-icons-extended.VfPpkd-Bz112c-kBDsod');
+                    if (button) {
+                        button.click();
+                        console.log("Captions turned on");
+                    }
+                }
+            });
+
+            // If no button was found, try again after 100ms
+            setTimeout(waitForButtonAndClick, 100); // Check every 100ms
         };
 
+        // Call the function to initiate the process
         waitForButtonAndClick();
+
     }
 
 }
