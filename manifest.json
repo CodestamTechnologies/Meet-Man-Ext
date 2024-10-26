@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "MeetMan",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Meetman provides seamless real-time chat during and after meetings to talk to your meetings.",
   "permissions": ["activeTab", "storage"],
   "content_scripts": [
