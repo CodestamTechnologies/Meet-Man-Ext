@@ -155,11 +155,13 @@ function createUI() {
     extensionDiv.style.color = '#FFFFFF';
     extensionDiv.style.padding = '10px';
     extensionDiv.style.border = '1px solid #555555';
+    extensionDiv.style.minWidth = '250px';  // Added this line to set a minimum width
     extensionDiv.style.maxWidth = '300px';
     extensionDiv.style.maxHeight = '80vh';
     extensionDiv.style.overflowY = 'auto';
     extensionDiv.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
 
+    // Drag 
     extensionDiv.addEventListener('mousedown', (e) => {
         isDragging = true;
         offsetX = e.clientX - extensionDiv.getBoundingClientRect().left;
@@ -187,6 +189,16 @@ function createUI() {
     keyInput.style.color = '#FFFFFF';
     keyInput.style.border = '1px solid #555555';
 
+    const getKeyLink = document.createElement('a');
+    getKeyLink.textContent = 'Get your key';
+    getKeyLink.href = 'https://meetman.codestam.com/?source=ext';
+    getKeyLink.target = '_blank';
+    getKeyLink.style.display = 'block';
+    getKeyLink.style.marginBottom = '10px';
+    getKeyLink.style.color = '#4CAF50';
+    getKeyLink.style.textDecoration = 'none';
+    getKeyLink.style.fontSize = '12px'; // Added this line to reduce font size
+
     keyButton = document.createElement('button');
     keyButton.textContent = 'Submit Key';
     keyButton.style.width = '100%';
@@ -204,6 +216,7 @@ function createUI() {
     statusDiv.style.color = '#CCCCCC';
 
     extensionDiv.appendChild(keyInput);
+    extensionDiv.appendChild(getKeyLink);
     extensionDiv.appendChild(keyButton);
     extensionDiv.appendChild(statusDiv);
 
@@ -254,6 +267,17 @@ function createMainUI() {
     removeKeyButton.title = 'Remove stored API key';
     removeKeyButton.onclick = removeStoredKey;
 
+    // New go to dashboard link
+    const dashboardLink = document.createElement('a');
+    dashboardLink.textContent = 'Go to Dashboard';
+    dashboardLink.href = 'https://meetman.codestam.com/dashboard?source=ext';
+    dashboardLink.target = '_blank';
+    dashboardLink.style.display = 'block';
+    dashboardLink.style.marginBottom = '10px';
+    dashboardLink.style.color = '#4CAF50';
+    dashboardLink.style.textDecoration = 'none';
+    dashboardLink.style.fontSize = '12px';
+
     responseDiv = document.createElement('div');
     responseDiv.style.marginBottom = '10px';
     responseDiv.style.whiteSpace = 'pre-wrap';
@@ -301,6 +325,7 @@ function createMainUI() {
     extensionDiv.appendChild(removeKeyButton);
     extensionDiv.appendChild(questionInput);
     extensionDiv.appendChild(askButton);
+    extensionDiv.appendChild(dashboardLink);
     extensionDiv.appendChild(responseDiv);
     extensionDiv.appendChild(buttonContainer);
 }
@@ -354,6 +379,10 @@ function showMainUI() {
     // Remove key input elements
     extensionDiv.removeChild(keyInput);
     extensionDiv.removeChild(keyButton);
+    const getKeyLink = extensionDiv.querySelector('a[href="https://meetman.codestam.com/?source=ext"]');
+    if (getKeyLink) {
+        extensionDiv.removeChild(getKeyLink);
+    }
 
     // Create and show main UI elements
     createMainUI();
